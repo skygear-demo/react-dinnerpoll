@@ -23,6 +23,7 @@ class SignInForm extends React.Component {
   }
 
   handleSignIn() {
+    this.props.onAsyncStart();
     skygear.auth
       .loginWithUsername(this.state.username, this.state.password)
       .then(this.props.onSignIn)
@@ -35,7 +36,8 @@ class SignInForm extends React.Component {
         } else {
           this.setState({ unknownError: true });
         }
-      });
+      })
+      .finally(this.props.onAsyncEnd);
   }
 
   render() {
