@@ -1,0 +1,28 @@
+{
+  "name": "dinner-poll",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "prettier": "^1.10.2",
+    "pretty-quick": "^1.3.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1",
+    "reactstrap": "^5.0.0-beta"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build":
+      "react-scripts build && rm -rf public_html && mv build public_html",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "prettify": "prettier --single-quote --write src/**/*.js",
+    "precommit": "pretty-quick --staged",
+    "deploy": "skycli deploy"
+  },
+  "homepage": "https://reactdinnerpoll.skygeario.com/static/"
+}
