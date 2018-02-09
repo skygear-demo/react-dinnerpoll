@@ -3,7 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 import Banner from "./Banner";
 import SignInForm from "./SignInForm";
 
-export default () => (
+export default ({ onSignIn }) => (
   <Container>
     <Row>
       <Col>
@@ -13,7 +13,7 @@ export default () => (
 
     <Row className="mt-3 justify-content-center">
       <Col sm="5">
-        <SignInForm />
+        <SignInForm onSignIn={onSignIn} />
       </Col>
     </Row>
   </Container>
