@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: skygear.auth.currentUser,
+      user: true, //skygear.auth.currentUser,
       isBusy: false
     };
 
@@ -33,7 +33,6 @@ class App extends React.Component {
     return (
       <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
         <Progress
-          className="mb-3"
           style={{ visibility: this.state.isBusy ? "visible" : "hidden" }}
           animated
           color="primary"
