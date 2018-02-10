@@ -1,6 +1,7 @@
 import React from "react";
 import skygear from "skygear";
-import { Alert, Button, Form, FormGroup, Input } from "reactstrap";
+import { Button, Form, FormGroup, Input } from "reactstrap";
+import SkygearAlert from "./SkygearAlert";
 
 class SignInForm extends React.Component {
   constructor(props) {
@@ -25,15 +26,6 @@ class SignInForm extends React.Component {
       .loginWithUsername(this.state.username, this.state.password)
       .then(this.props.onSignIn)
       .catch(({ error }) => {
-        // if (
-        //   error.error.code === skygear.ErrorCodes.InvalidCredentials ||
-        //   error.error.code === skygear.ErrorCodes.ResourceNotFound
-        // ) {
-        //   this.setState({ invalidCredentials: true });
-        // } else {
-        //   console.error(error);
-        //   this.setState({ unknownError: true });
-        // }
         this.setState({ error });
       })
       .finally(this.props.onAsyncEnd);
@@ -60,14 +52,7 @@ class SignInForm extends React.Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <Alert color="danger" isOpen={this.state.error !== null}>
-          {this.state.error
-            ? this.state.error.code === skygear.ErrorCodes.InvalidCredentials ||
-              this.state.error.code === skygear.ErrorCodes.ResourceNotFound
-              ? "Error: invalid username or password"
-              : this.state.error.message
-            : ""}
-        </Alert>
+        <SkygearAlert error={this.state.error} />
         <Button color="primary" block onClick={this.handleSignIn}>
           Sign in
         </Button>
