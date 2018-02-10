@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container, Row, Col } from "reactstrap";
 import skygear from "skygear";
 import Ballot from "./Ballot";
+import ResultsChart from "./ResultsChart";
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -30,6 +31,12 @@ class MainPage extends React.Component {
             <Button color="primary" onClick={this.handleSignOut}>
               Sign out
             </Button>
+          </Col>
+        </Row>
+
+        <Row className="mt-3">
+          <Col>
+            <ResultsChart />
           </Col>
         </Row>
 
