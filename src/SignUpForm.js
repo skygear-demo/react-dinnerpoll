@@ -3,7 +3,7 @@ import skygear from "skygear";
 import { Button, Form, FormGroup, Input } from "reactstrap";
 import SkygearAlert from "./SkygearAlert";
 
-class SignInForm extends React.Component {
+class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,18 +13,18 @@ class SignInForm extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSignIn() {
+  handleSignUp() {
     this.props.onAsyncStart();
     skygear.auth
-      .loginWithUsername(this.state.username, this.state.password)
-      .then(this.props.onSignIn)
+      .signupWithUsername(this.state.username, this.state.password)
+      .then(this.props.onSignUp)
       .catch(({ error }) => {
         this.setState({ error });
       })
@@ -39,6 +39,7 @@ class SignInForm extends React.Component {
             type="text"
             name="username"
             placeholder="Username"
+            minLength="1"
             value={this.state.username}
             onChange={this.handleChange}
           />
@@ -53,12 +54,12 @@ class SignInForm extends React.Component {
           />
         </FormGroup>
         <SkygearAlert error={this.state.error} />
-        <Button color="primary" block onClick={this.handleSignIn}>
-          Sign in
+        <Button color="primary" block onClick={this.handleSignUp}>
+          Sign up
         </Button>
       </Form>
     );
   }
 }
 
-export default SignInForm;
+export default SignUpForm;

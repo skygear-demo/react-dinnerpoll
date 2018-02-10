@@ -47,6 +47,7 @@ class App extends React.Component {
           ) : (
             <AuthPage
               onSignIn={this.updateUser}
+              onSignUp={this.updateUser}
               onAsyncStart={this.showProgressBar}
               onAsyncEnd={this.dismissProgressBar}
             />

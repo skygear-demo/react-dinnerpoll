@@ -6,12 +6,20 @@ export default ({ error }) => {
   if (error === null) {
     return null;
   } else {
-    let { code, message } = error;
-    if (
-      code === skygear.ErrorCodes.InvalidCredentials ||
-      code === skygear.ErrorCodes.ResourceNotFound
-    ) {
-      message = "Error: invalid username or password";
+    let message = "";
+    switch (error.code) {
+      case skygear.ErrorCodes.InvalidCredentials:
+        message = "invalid username or password";
+        break;
+      case skygear.ErrorCodes.ResourceNotFound:
+        message = "invalid username or password";
+        break;
+      case skygear.ErrorCodes.Duplicated:
+        message = "username not available";
+        break;
+      default:
+        message = error.message;
+        break;
     }
     return <Alert color="danger">{`Error: ${message}`}</Alert>;
   }
