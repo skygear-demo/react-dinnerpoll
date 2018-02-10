@@ -2,6 +2,7 @@ import React from "react";
 import { Progress } from "reactstrap";
 import skygear from "skygear";
 import AuthPage from "./AuthPage";
+import MainPage from "./MainPage";
 
 class App extends React.Component {
   constructor(props) {
@@ -32,27 +33,34 @@ class App extends React.Component {
     return (
       <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
         <Progress
+          className="mb-3"
           style={{ visibility: this.state.isBusy ? "visible" : "hidden" }}
           animated
           color="primary"
           value="100"
         />
 
-        <div
-          className="d-flex flex-column justify-content-center"
-          style={{ flex: "auto" }}
-        >
-          {this.state.user ? (
-            <div>Hello, world!</div>
-          ) : (
+        {this.state.user ? (
+          <MainPage
+            onSignOut={this.updateUser}
+            onAsyncStart={this.showProgressBar}
+            onAsyncEnd={this.dismissProgressBar}
+          />
+        ) : (
+          <div
+            className="d-flex flex-column justify-content-center"
+            style={{ flex: "auto" }}
+          >
             <AuthPage
+              className="d-flex flex-column justify-content-center"
+              style={{ flex: "auto" }}
               onSignIn={this.updateUser}
               onSignUp={this.updateUser}
               onAsyncStart={this.showProgressBar}
               onAsyncEnd={this.dismissProgressBar}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   }
