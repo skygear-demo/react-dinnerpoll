@@ -8,8 +8,7 @@ class SignInForm extends React.Component {
     this.state = {
       username: "",
       password: "",
-      invalidCredentials: false,
-      unknownError: false
+      error: null
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -17,9 +16,7 @@ class SignInForm extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.name === "username" || event.target.name === "password") {
-      this.setState({ [event.target.name]: event.target.value });
-    }
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSignIn() {
@@ -27,15 +24,17 @@ class SignInForm extends React.Component {
     skygear.auth
       .loginWithUsername(this.state.username, this.state.password)
       .then(this.props.onSignIn)
-      .catch(error => {
-        if (
-          error.error.code === skygear.ErrorCodes.InvalidCredentials ||
-          error.error.code === skygear.ErrorCodes.ResourceNotFound
-        ) {
-          this.setState({ invalidCredentials: true });
-        } else {
-          this.setState({ unknownError: true });
-        }
+      .catch(({ error }) => {
+        // if (
+        //   error.error.code === skygear.ErrorCodes.InvalidCredentials ||
+        //   error.error.code === skygear.ErrorCodes.ResourceNotFound
+        // ) {
+        //   this.setState({ invalidCredentials: true });
+        // } else {
+        //   console.error(error);
+        //   this.setState({ unknownError: true });
+        // }
+        this.setState({ error });
       })
       .finally(this.props.onAsyncEnd);
   }
@@ -61,8 +60,13 @@ class SignInForm extends React.Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <Alert color="warning" isOpen={this.state.invalidCredentials}>
-          Invalid username or password
+        <Alert color="danger" isOpen={this.state.error !== null}>
+          {this.state.error
+            ? this.state.error.code === skygear.ErrorCodes.InvalidCredentials ||
+              this.state.error.code === skygear.ErrorCodes.ResourceNotFound
+              ? "Error: invalid username or password"
+              : this.state.error.message
+            : ""}
         </Alert>
         <Button color="primary" block onClick={this.handleSignIn}>
           Sign in
