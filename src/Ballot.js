@@ -84,7 +84,7 @@ class Ballot extends React.Component {
       <Container>
         <Row>{this.state.options}</Row>
         <Row>
-          <Col className="text-center">
+          <Col className="text-right">
             <Button color="primary" onClick={this.vote}>
               Vote !
             </Button>

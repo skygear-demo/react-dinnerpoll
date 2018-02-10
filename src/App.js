@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: true, //skygear.auth.currentUser,
+      user: skygear.auth.currentUser, //skygear.auth.currentUser,true
       isBusy: false
     };
 
