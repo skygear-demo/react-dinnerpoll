@@ -1,5 +1,6 @@
 import React from "react";
 import Chart from "chart.js";
+import randomColor from "randomcolor";
 import skygear from "skygear";
 
 class ResultsChart extends React.Component {
@@ -15,7 +16,14 @@ class ResultsChart extends React.Component {
             datasets: [
               {
                 label: "# of Votes",
-                data: results.map(result => result.count)
+                data: results.map(result => result.count),
+                backgroundColor: randomColor({
+                  count: results.length,
+                  luminosity: "light",
+                  format: "rgba",
+                  alpha: 0.5
+                }),
+                borderWidth: 1
               }
             ]
           },
