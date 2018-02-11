@@ -1,7 +1,7 @@
 import React from "react";
 import skygear from "skygear";
 import { Button, Form, FormGroup, Input } from "reactstrap";
-import SkygearAlert from "./SkygearAlert";
+import AuthPageAlert from "./AuthPageAlert";
 
 class SignInForm extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class SignInForm extends React.Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <SkygearAlert error={this.state.error} />
+        <AuthPageAlert error={this.state.error} />
         <Button color="primary" block onClick={this.handleSignIn}>
           Sign in
         </Button>

@@ -23,7 +23,7 @@
       "react-scripts build && rm -rf public_html && mv build public_html",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prettify": "prettier --write src/**/*.js index.js",
+    "prettify": "prettier --write index.js 'src/**/*.@(js|css)'",
     "precommit": "pretty-quick --staged",
     "deploy": "skycli deploy"
   },

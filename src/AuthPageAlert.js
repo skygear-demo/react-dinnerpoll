@@ -3,9 +3,7 @@ import { Alert } from "reactstrap";
 import skygear from "skygear";
 
 export default ({ error }) => {
-  if (error === null) {
-    return null;
-  } else {
+  if (error) {
     let message = "";
     switch (error.code) {
       case skygear.ErrorCodes.InvalidCredentials:
@@ -23,4 +21,6 @@ export default ({ error }) => {
     }
     return <Alert color="danger">{`Error: ${message}`}</Alert>;
   }
+
+  return null;
 };
