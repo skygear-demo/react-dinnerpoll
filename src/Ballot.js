@@ -10,6 +10,7 @@ import {
   CardText,
   CardBody
 } from "reactstrap";
+import skygear from "skygear";
 
 const fakeAsyncOperation = data =>
   new Promise(resolve => setTimeout(resolve, 100, data));
@@ -46,27 +47,30 @@ class Ballot extends React.Component {
   ];
 
   componentDidMount() {
-    fakeAsyncOperation([]).then(dishes => {
-      dishes = [...this._defaultDishes, ...dishes];
-      this.setState({
-        options: dishes.map((dish, index) => (
-          <Col sm="3" key={index.toString()} className="mb-3">
-            <Card className="text-center">
-              <CardBody>
-                <CardTitle>{dish.name}</CardTitle>
-                <CardText>{dish.description}</CardText>
-                <input
-                  type="radio"
-                  name="selectedDish"
-                  value={dish.name}
-                  onChange={this.handleChange}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-        ))
-      });
-    });
+    this.props.onAsyncStart();
+    fakeAsyncOperation([])
+      .then(dishes => {
+        dishes = [...this._defaultDishes, ...dishes];
+        this.setState({
+          options: dishes.map((dish, index) => (
+            <Col sm="3" key={index.toString()} className="mb-3">
+              <Card className="text-center">
+                <CardBody>
+                  <CardTitle>{dish.name}</CardTitle>
+                  <CardText>{dish.description}</CardText>
+                  <input
+                    type="radio"
+                    name="selectedDish"
+                    value={dish.name}
+                    onChange={this.handleChange}
+                  />
+                </CardBody>
+              </Card>
+            </Col>
+          ))
+        });
+      })
+      .finally(this.props.onAsyncEnd);
   }
 
   handleChange(event) {
@@ -75,7 +79,21 @@ class Ballot extends React.Component {
 
   vote() {
     if (this.state.selectedDish !== null) {
-      console.log(this.state.selectedDish);
+      const Vote = skygear.Record.extend("vote");
+      this.props.onAsyncStart();
+      skygear.publicDB
+        .save(
+          new Vote({
+            dish: this.state.selectedDish
+          })
+        )
+        .then(() => {
+          console.log("success");
+        })
+        .catch(() => {
+          console.log("fail");
+        })
+        .finally(this.props.onAsyncEnd);
     }
   }
 
