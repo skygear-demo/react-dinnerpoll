@@ -36,7 +36,10 @@ class MainPage extends React.Component {
 
         <Row className="mt-3">
           <Col>
-            <ResultsChart />
+            <ResultsChart
+              onAsyncStart={this.props.onAsyncStart}
+              onAsyncEnd={this.props.onAsyncEnd}
+            />
           </Col>
         </Row>
 
