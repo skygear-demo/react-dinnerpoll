@@ -78,7 +78,7 @@ class Ballot extends React.Component {
   }
 
   vote() {
-    if (this.state.selectedDish !== null) {
+    if (this.state.selectedDish) {
       const Vote = skygear.Record.extend("vote");
       this.props.onAsyncStart();
       skygear.publicDB
@@ -88,12 +88,23 @@ class Ballot extends React.Component {
           })
         )
         .then(() => {
-          console.log("success");
+          this.props.onEvent({
+            type: "success"
+          });
         })
-        .catch(() => {
-          console.log("fail");
+        .catch(error => {
+          console.error(error);
+          this.props.onEvent({
+            type: "error",
+            message: "fail to vote"
+          });
         })
         .finally(this.props.onAsyncEnd);
+    } else {
+      this.props.onEvent({
+        type: "warning",
+        message: "no dish is selected"
+      });
     }
   }
 

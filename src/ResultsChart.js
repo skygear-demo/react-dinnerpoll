@@ -40,7 +40,13 @@ class ResultsChart extends React.Component {
           }
         });
       })
-      .catch(error => console.error(error))
+      .catch(error => {
+        console.error(error);
+        this.props.onEvent({
+          type: "error",
+          message: "fail to load results"
+        });
+      })
       .finally(this.props.onAsyncEnd);
   }
 
