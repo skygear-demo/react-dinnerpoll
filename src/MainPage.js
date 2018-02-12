@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Container, Row, Col } from "reactstrap";
 import skygear from "skygear";
 import Ballot from "./Ballot";
-import MainPageAlert from "./MainPageAlert";
+import CustomAlert from "./CustomAlert";
 import ResultsChart from "./ResultsChart";
 
 class MainPage extends React.Component {
@@ -21,8 +21,14 @@ class MainPage extends React.Component {
     skygear.auth
       .logout()
       .then(this.props.onSignOut)
-      .catch(error => {
+      .catch(({ error }) => {
         console.error(error);
+        this.setState({
+          event: {
+            type: "error",
+            message: error.message
+          }
+        });
       })
       .finally(this.props.onAsyncEnd);
   }
@@ -38,7 +44,17 @@ class MainPage extends React.Component {
   render() {
     return (
       <Container>
-        <MainPageAlert event={this.state.event} />
+        <div
+          style={{
+            position: "fixed",
+            width: "30%",
+            top: 20,
+            right: 20,
+            zIndex: 1
+          }}
+        >
+          <CustomAlert event={this.state.event} />
+        </div>
 
         <Row className="mt-3">
           <Col className="text-right">

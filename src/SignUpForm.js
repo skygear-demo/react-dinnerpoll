@@ -1,7 +1,7 @@
 import React from "react";
 import skygear from "skygear";
 import { Button, Form, FormGroup, Input } from "reactstrap";
-import AuthPageAlert from "./AuthPageAlert";
+import CustomAlert from "./CustomAlert";
 
 class SignUpForm extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class SignUpForm extends React.Component {
     this.state = {
       username: "",
       password: "",
-      error: null
+      event: null
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,7 +26,22 @@ class SignUpForm extends React.Component {
       .signupWithUsername(this.state.username, this.state.password)
       .then(this.props.onSignUp)
       .catch(({ error }) => {
-        this.setState({ error });
+        console.error(error);
+        if (error.code === skygear.ErrorCodes.Duplicated) {
+          this.setState({
+            event: {
+              type: "error",
+              message: `username ${this.state.username} not available`
+            }
+          });
+        } else {
+          this.setState({
+            event: {
+              type: "error",
+              message: error.message
+            }
+          });
+        }
       })
       .finally(this.props.onAsyncEnd);
   }
@@ -53,7 +68,7 @@ class SignUpForm extends React.Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <AuthPageAlert error={this.state.error} />
+        <CustomAlert event={this.state.event} />
         <Button color="primary" block onClick={this.handleSignUp}>
           Sign up
         </Button>

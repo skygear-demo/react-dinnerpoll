@@ -1,7 +1,7 @@
 import React from "react";
 import skygear from "skygear";
 import { Button, Form, FormGroup, Input } from "reactstrap";
-import AuthPageAlert from "./AuthPageAlert";
+import CustomAlert from "./CustomAlert";
 
 class SignInForm extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class SignInForm extends React.Component {
     this.state = {
       username: "",
       password: "",
-      error: null
+      event: null
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,7 +26,25 @@ class SignInForm extends React.Component {
       .loginWithUsername(this.state.username, this.state.password)
       .then(this.props.onSignIn)
       .catch(({ error }) => {
-        this.setState({ error });
+        console.error(error);
+        if (
+          error.code === skygear.ErrorCodes.InvalidCredentials ||
+          error.code === skygear.ErrorCodes.ResourceNotFound
+        ) {
+          this.setState({
+            event: {
+              type: "error",
+              message: "invalid username or password"
+            }
+          });
+        } else {
+          this.setState({
+            event: {
+              type: "error",
+              message: error.message
+            }
+          });
+        }
       })
       .finally(this.props.onAsyncEnd);
   }
@@ -52,7 +70,7 @@ class SignInForm extends React.Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <AuthPageAlert error={this.state.error} />
+        <CustomAlert event={this.state.event} />
         <Button color="primary" block onClick={this.handleSignIn}>
           Sign in
         </Button>
