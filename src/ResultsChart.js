@@ -4,6 +4,11 @@ import randomColor from "randomcolor";
 import skygear from "skygear";
 
 class ResultsChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.refresh = this.refresh.bind(this);
+  }
+
   refresh() {
     this.props.onAsyncStart();
     skygear
@@ -52,6 +57,8 @@ class ResultsChart extends React.Component {
 
   componentDidMount() {
     this.refresh();
+
+    skygear.pubsub.on("vote", this.refresh);
   }
 
   render() {

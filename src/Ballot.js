@@ -91,6 +91,8 @@ class Ballot extends React.Component {
           this.props.onEvent({
             type: "success"
           });
+
+          skygear.pubsub.publish("vote", {});
         })
         .catch(error => {
           console.error(error);
