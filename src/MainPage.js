@@ -45,12 +45,11 @@ class MainPage extends React.Component {
     return (
       <Container>
         <div
+          className="fixed-top text-center"
           style={{
-            position: "fixed",
-            width: "30%",
-            top: 20,
-            right: 20,
-            zIndex: 1
+            top: "5%",
+            right: "5%",
+            left: "auto"
           }}
         >
           <CustomAlert event={this.state.event} />

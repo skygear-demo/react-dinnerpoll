@@ -33,7 +33,9 @@ class App extends React.Component {
     return (
       <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
         <Progress
-          style={{ visibility: this.state.isBusy ? "visible" : "hidden" }}
+          className={
+            this.state.isBusy ? "visible fixed-top" : "invisible fixed-top"
+          }
           animated
           color="primary"
           value="100"
