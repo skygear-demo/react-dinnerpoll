@@ -11,7 +11,6 @@ import {
   CardBody
 } from "reactstrap";
 import skygear from "skygear";
-import { height } from "window-size";
 
 const fakeAsyncOperation = data =>
   new Promise(resolve => setTimeout(resolve, 100, data));

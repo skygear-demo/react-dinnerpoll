@@ -1,6 +1,6 @@
 {
   "name": "dinner-poll",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "devDependencies": {
     "husky": "^0.14.3",
@@ -26,7 +26,7 @@
     "eject": "react-scripts eject",
     "prettify": "prettier --write index.js 'src/**/*.@(js|css)'",
     "precommit": "pretty-quick --staged",
-    "deploy": "skycli deploy"
+    "deploy": "yarn build && skycli deploy"
   },
   "homepage": "https://reactdinnerpoll.skygeario.com/static/"
 }
