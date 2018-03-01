@@ -20,7 +20,6 @@ class ResultsChart extends React.Component {
             labels: results.map(result => result.dish),
             datasets: [
               {
-                label: "# of Votes",
                 data: results.map(result => result.count),
                 backgroundColor: randomColor({
                   count: results.length,
@@ -33,6 +32,9 @@ class ResultsChart extends React.Component {
             ]
           },
           options: {
+            legend: {
+              display: false
+            },
             scales: {
               yAxes: [
                 {
@@ -41,6 +43,10 @@ class ResultsChart extends React.Component {
                   }
                 }
               ]
+            },
+            title: {
+              display: true,
+              text: "# of votes"
             }
           }
         });
