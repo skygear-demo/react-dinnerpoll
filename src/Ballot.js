@@ -11,6 +11,7 @@ import {
   CardBody
 } from "reactstrap";
 import skygear from "skygear";
+import { height } from "window-size";
 
 const fakeAsyncOperation = data =>
   new Promise(resolve => setTimeout(resolve, 100, data));
@@ -54,7 +55,7 @@ class Ballot extends React.Component {
         this.setState({
           options: dishes.map((dish, index) => (
             <Col sm="3" key={index.toString()} className="mb-3">
-              <Card className="text-center">
+              <Card className="text-center" style={{ minHeight: "100%" }}>
                 <CardBody>
                   <CardTitle>{dish.name}</CardTitle>
                   <CardText>{dish.description}</CardText>
